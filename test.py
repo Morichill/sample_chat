@@ -14,9 +14,7 @@ def test_server_starts_tcp_server(self):
     server_thread = threading.Thread(target=srv.start_listening)
     server_thread.start()
 
-    # On my computer, 0.0000001 is the minimum sleep time or the 
-    # client might connect before server thread binds and listens
-    # Other computers will differ. I wanted a low number to make tests fast
+  # test for old version chat
     time.sleep(0.000001)  
 
     # This is our fake test client that is just going to attempt a connect and disconnect
