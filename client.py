@@ -26,31 +26,31 @@ class ChatClient(object):
             print ("Failed to connect to chat server @ port %d" % self.port)
             sys.exit(1)
 
-def run(self):
-    """ Chat client main loop """
-    while self.connected:
-        try:
-            sys.stdout.write(self.prompt)
-            sys.stdout.flush()
-            # Ожидаем ввод из stdin и сокета
-            readable, writeable,exceptional = select.select([0, self.sock], [],[])
-            for sock in readable:
-                if sock == 0:
-                    data = sys.stdin.readline().strip()
-                    if data: send(self.sock, data)
-                elif sock == self.sock:
-                    data = receive(self.sock)
-                    if not data:
-                        print ('Client shutting down.')
-                        self.connected = False
-                        break
-                    else:
-                        sys.stdout.write(data + '\n')
-                        sys.stdout.flush()
-        except KeyboardInterrupt:
-            print (" Client interrupted. """)
-            self.sock.close()
-break
+    def run(self):
+        """ Chat client main loop """
+        while self.connected:
+            try:
+                sys.stdout.write(self.prompt)
+                sys.stdout.flush()
+                # Ожидаем ввод из stdin и сокета
+                readable, writeable,exceptional = select.select([0, self.sock], [],[])
+                for sock in readable:
+                    if sock == 0:
+                        data = sys.stdin.readline().strip()
+                        if data: send(self.sock, data)
+                    elif sock == self.sock:
+                        data = receive(self.sock)
+                        if not data:
+                            print ('Client shutting down.')
+                            self.connected = False
+                            break
+                        else:
+                            sys.stdout.write(data + '\n')
+                            sys.stdout.flush()
+            except KeyboardInterrupt:
+                print (" Client interrupted. """)
+                self.sock.close()
+               break
 
 
 if __name__ == "__main__":
