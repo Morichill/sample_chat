@@ -1,9 +1,11 @@
+#!/usr/bin/env python
 
-
+import unittest
+import socket
 import server
 
 import client
-import unittest
+
 
 class TestStringMethods(unittest.TestCase):
 
@@ -12,10 +14,6 @@ class TestStringMethods(unittest.TestCase):
      #отлавливаем ошибки с помощью Assert
 
         assert type(value) == int   
-
-        assert value > 0
-
-
 
         return value*value		
 
@@ -28,8 +26,6 @@ class TestStringMethods(unittest.TestCase):
         server_thread = threading.Thread(target=srv.start_listening)
 
         server_thread.start()
-
-
 
       # test for old version chat
 
