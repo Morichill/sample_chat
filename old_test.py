@@ -1,97 +1,98 @@
-import pytest
+
 
 import server
 
 import client
+import unittest
+
+class TestStringMethods(unittest.TestCase):
+
+    def simple_func(value):
+
+     #отлавливаем ошибки с помощью Assert
+
+        assert type(value) == int   
+
+        assert value > 0
 
 
 
+        return value*value		
 
+    def test_server_starts_tcp_server(self):
 
-def simple_func(value):
+       # Start server 
 
- #отлавливаем ошибки с помощью Assert
+        srv = server.server('127.0.0.1', 7777)
 
-    assert type(value) == int   
+        server_thread = threading.Thread(target=srv.start_listening)
 
-    assert value > 0
-
-
-
-    return value*value		
-
-def test_server_starts_tcp_server(self):
-
-    # Start server 
-
-    srv = server.server('127.0.0.1', 7777)
-
-    server_thread = threading.Thread(target=srv.start_listening)
-
-    server_thread.start()
+        server_thread.start()
 
 
 
-  # test for old version chat
+      # test for old version chat
 
-    time.sleep(0.000001)  
-
-
-
-    # This is our fake test client that is just going to attempt a connect and disconnect
-
-    fake_client = socket.socket()
-
-    fake_client.settimeout(1)
-
-    fake_client.connect(('127.0.0.1', 7777))
-
-    fake_client.close()
+        time.sleep(0.000001)  
 
 
 
-    # Make sure server thread finishes
+        # This is our fake test client that is just going to attempt a connect and disconnect
 
-    server_thread.join()
+        fake_client = socket.socket()
 
+        fake_client.settimeout(1)
 
+        fake_client.connect(('127.0.0.1', 7777))
 
-def run_fake_server(self):
-
-    # Run a server to listen for a connection and then close it
-
-    server_sock = socket.socket()
-
-    server_sock.bind(('127.0.0.1', 7777))
-
-    server_sock.listen(0)
-
-    server_sock.accept()
-
-    server_sock.close()
+        fake_client.close()
 
 
 
-def test_client_connects_and_disconnects_to_default_server(self):
+        # Make sure server thread finishes
 
-    # Start fake server 
-
-    server_thread = threading.Thread(target=self.run_fake_server)
-
-    server_thread.start()
+        server_thread.join()
 
 
 
-    # Test the clients basic connection and disconnection
+    def run_fake_server(self):
 
-    client = client.client()
+        # Run a server to listen for a connection and then close it
 
-    client.connect('127.0.0.1', 7777)
+        server_sock = socket.socket()
 
-    client.disconnect()
+        server_sock.bind(('127.0.0.1', 7777))
+
+        server_sock.listen(0)
+
+        server_sock.accept()
+
+        server_sock.close()
 
 
 
-    # Ensure server thread ends
+    def test_client_connects_and_disconnects_to_default_server(self):
 
-    server_thread.join()
+        # Start fake server 
+
+        server_thread = threading.Thread(target=self.run_fake_server)
+
+        server_thread.start()
+
+
+
+        # Test the clients basic connection and disconnection
+
+        client = client.client()
+
+        client.connect('127.0.0.1', 7777)
+
+        client.disconnect()
+         # Ensure server thread ends
+
+        server_thread.join()
+
+
+
+if __name__ == '__main__':
+    unittest.main()
