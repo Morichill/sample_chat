@@ -7,7 +7,6 @@ python:
    - "3.5"
    
 install:
-   - pip install unittest
    - pip install test_support
    - pip install time
 
